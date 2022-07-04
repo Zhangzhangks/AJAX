@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 1. 引入-->
+    <script src="./template-web.js"></script>
+    <script src="../jquery.min.js"></script>
+
+</head>
+
+<body>
+    <!-- 5.渲染html结构 -->
+    <div class="container"></div>
+    <!-- 3.定义模板 "text/html" 把代码当做html解析 -->
+    <!-- //{{}}表示占位符,里面的数据来获取数据 -->
+    <script type="text/html" id="tpl-use">
+
+        <h1>{{name}}</h1>
+        {{@ test}}
+        <!-- 可以直接输出标签结构 -->
+        <div>
+            <!-- 可以使用条件语句  -->
+            {{if age=18}} 年龄大于18 {{else if age>20}} 年龄大于20 {{/if}}
+        </div>
+
+        <ul>{{each arr}}
+            <li>{{$index}}{{$value}}
+            </li>{{/each}}
+        </ul>
+    </script>
+    <script>
+        //2.d定义需要渲染的数据
+        var data = {
+            name: 'zks',
+            age: 18,
+            test: '<h3 style="color:blue">测试原文输出</h3>',
+            arr: ["red", "blue ", 12]
+        };
+        //4.调用膜板 必须使用id
+        var htmlstr = template('tpl-use', data);
+        $('.container').html(htmlstr);
+        // console.log(htmlstr);
+    </script>
+</body>
+
+</html>

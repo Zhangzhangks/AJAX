@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./jquery.min.js"></script>
+    <style>
+        div {
+            width: 120px;
+            height: 120px;
+            border: 1px solid #000;
+            position: absolute;
+        }
+        
+        img {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- //节流就是当某个事件不断的触发，我们降低触发评率 -->
+    <div>
+        <img src="./angel.gif" alt="">
+    </div>
+    <script>
+        var time = null
+        $(function() {
+            $(document).on('mousemove', function(e) {
+                if (time) {
+                    return
+                } else {
+                    time = setTimeout(() => {
+                        $('div').css('left', e.pageX + 'px').css('top', e.pageY + 'px');
+                        console.log('ok');
+                        time = null
+                    }, 16);
+
+                }
+
+            })
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./jquery.min.js"></script>
+</head>
+<body>
+    
+    <script>
+            //json的本质就是JavaScript的字符串 不过有自己的语法规则
+        // json中的两种结构
+        //1. 对象结构 对象结构以对象形式体现{key:value } 
+        // key值必须以双引号括起来，
+        //  值必须可以使数字，数组。字符串 ，布尔值 ，null，对象 6种
+        // {
+        //     "name":"zks",
+        //     "age":20,
+        //     "性别":"男",
+
+        // }
+
+        //2. 数组接结构 以数组为主[1,"zks",null，[1,2,3],{"name":"zks","age":18}]
+        // 值必须可以使数字，数组。字符串 ，布尔值 ，null，对象 6种
+
+        var str={a:"hello",b:"word"}; //js对象
+        var json='{"a":"hello","b":"word"}'; //json对象
+        
+        //json-js 官方名反序列化 字符串到对象
+        var obj=JSON.parse(json);
+        console.log(typeof obj); 
+
+        //这个的应用是
+        var xhr=new XMLHttpRequest();
+        xhr.open('get',"http://www.liulongbin.top:3006/api/getbooks");
+        xhr.send();
+        xhr.onreadystatechange=function(){
+            if(xhr.readyState==4&&xhr.status==200){
+                // console.log(xhr.responseText); //这个输出的是json字符串 不容易操作 转化为对象好操作
+           var rest=xhr.responseText;
+           console.log(JSON.parse(rest));
+            }
+        }
+
+        //js-json  官方名序列化 对象到字符串
+        var js=JSON.stringify(str);
+        console.log(typeof js);
+    </script>
+</body>
+</html>

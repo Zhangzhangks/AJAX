@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 1. 引入-->
+
+    <script src="./template-web.js"></script>
+    <script src="../jquery.min.js"></script>
+
+</head>
+
+<body>
+    <!-- 5.渲染html结构 -->
+    <div class="container"></div>
+    <!-- 3.定义模板 "text/html" 把代码当做html解析 -->
+    <!-- //{{}}表示占位符,里面的数据来获取数据 -->
+    <script type="text/html" id="tpl-use">
+        <div>
+            <!-- 过滤器  上一个输出当做下一个的输入-->
+            <h1> {{regTime| dataFormatTime}}</h1>
+            <h2>{{regTime}}</h2>
+        </div>
+    </script>
+
+    <script>
+        template.defaults.imports.dataFormatTime = function(value) {
+                console.log("过滤器的值" +
+                    value);
+                var y = value.getFullYear();
+                let m = value.getMonth() + 1;
+                let day = value.getDate();
+                return y + '-' + m + '-' + day
+            } //2.d定义需要渲染的数据
+        var data = {
+            regTime: new Date()
+        };
+        //4.调用膜板 必须使用id
+        var htmlstr = template('tpl-use', data);
+        $('.container').html(htmlstr);
+    </script>
+</body>
+
+</html>

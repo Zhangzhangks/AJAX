@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./jquery.min.js"></script>
+    <!-- <link rel="stylesheet" href="../bootstrap/bootstrap-3.4.1-dist/css/bootstrap.css"> -->
+</head>
+
+<body>
+    <!-- //网页获取数据 -->
+    <form action="/login" class="ac">
+        <input type="text " name="usename" autocomplete="off">
+        <input type="password " name="password">
+        <button type="submit">提交</button>
+    </form>
+
+    <!-- 进度条 -->
+    <div class="progress" style="width: 500px; margin: 20px;">
+        <div class="progress-bar progress-bar-striped active" style="width: 0%" id="jindu">
+
+        </div>
+    </div>
+    <!-- 上传文件 -->
+    <input type="file" name="" id="file1">
+    <button class="btn">上传文件</button>
+    <br>
+    <img src="" alt="" id="img" width="800">
+
+
+    <script>
+        // //1.设置http请求时限
+        // var xhr=new XMLHttpRequest();
+        // xhr.timeout=30;
+        // 超时函数
+        // xhr.ontimeout=function(){
+        //     alert("请求超时");
+        // }
+        // xhr.open('get',"http://www.liulongbin.top:3006/api/getbooks");
+        // xhr.send();
+        // xhr.onreadystatechange=function(){
+        //     if(xhr.readyState==4&&xhr.status==200){
+        //         console.log(xhr.responseText);
+        //     } 
+        // }
+        //2.formData
+        // var fd = new FormData();
+        // fd.append('name', 'zks');
+        // fd.append('password', '111');
+        // var sxhr = new XMLHttpRequest();
+        // sxhr.open("post", "http://www.liulongbin.top:3006/api/formdata");
+        // sxhr.send(fd);
+        // sxhr.onreadystatechange = function() {
+        //     if (sxhr.readyState == 4 && sxhr.status == 200) {
+        //         console.log(sxhr.responseText);
+        //     }
+        // }
+
+        // 3. 从网页拿取数据
+        // var form = document.querySelector('.ac');
+        // form.addEventListener('submit', function(e) {
+        //     e.preventDefault();
+
+        //     var fdd = new FormData(form);
+        //     var sxhr = new XMLHttpRequest();
+        //     sxhr.open("post", "http://www.liulongbin.top:3006/api/formdata");
+        //     sxhr.send(fdd);
+        //     sxhr.onreadystatechange = function() {
+        //         if (sxhr.readyState == 4 && sxhr.status == 200) {
+        //             console.log(sxhr.responseText);
+        //         }
+        //     }
+        // });
+
+        //4. 上传文件
+        var btn = document.querySelector(".btn");
+        btn.addEventListener('click', function() {
+            var file = document.querySelector('#file1').files;
+            if (file.length <= 0) {
+                console.log('请选择上传的文件');
+            } else {
+                console.log('用户选择了待上传的文件');
+            }
+            var fdd = new FormData();
+
+            //向formdata中追加文件
+            fdd.append('avatar', file[0]);
+            var xhr = new XMLHttpRequest();
+
+            xhr.open('post', 'http://www.liulongbin.top:3006/api/upload/avatar');
+            xhr.setRequestHeader('Content-type', 'application/-www-foorm-urlencoded');
+            xhr.send(fdd);
+            xhr.onreadystatechange = function() {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        var result = JSON.parse(xhr.responseText);
+                        // console.log(result);
+                        if (result.status == 200) {
+                            console.log('上传成功');
+                            document.querySelector('#img').src = ('http://www.liulongbin.top:3006' + result.url);
+                        } else {
+                            console.log('上传失败');
+                        }
+                    }
+                }
+                //     //显示进度
+                // xhr.upload.onprogress = function(e) {
+                //     //e.lengthComputable 计算是否可以算出上传的长度
+                //     if (e.lengthComputable) {
+
+            //         //e.loaded 已传输的字节
+            //         //e.total 需要传输的字节        
+            //         var percent = Math.ceil(e.loaded / e.total) * 100;
+            //         $('#jindu').attr('style', 'width:' + percent + '%;').html(percent + '%');
+
+            //     }
+            // }
+            // xhr.upload.onload = function() {
+            //     $('#jindu').removeClass().addClass('progress-bar progress-bar-success')
+            // }
+
+        });
+    </script>
+</body>
+
+</html>

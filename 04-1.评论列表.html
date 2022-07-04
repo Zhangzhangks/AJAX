@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./jquery.min.js"></script>
+    <link rel="stylesheet" href="./04-图书管理案列i.html/bootstrap.css">
+</head>
+
+<body style="padding: 15px;">
+
+    <!-- 评论面板 -->
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">发表评论</h3>
+        </div>
+        <div class="panel-body">
+            <form action="/login" class="ac">
+                <div>评论人:</div>
+                <input type="text" name="user" id="name" class="form-control">
+                <div>评论 内容:</div>
+                <input class="form-control" name="content" id="content"></input>
+
+                <button type="submit" class="btn btn-primary" id="addComment">发表评论</button>
+            </form>
+
+        </div>
+    </div>
+    <!-- 评论列表 -->
+
+
+    <ul class="list-group">
+
+
+    </ul>
+
+    <script>
+        $(function() {
+            function getComment() {
+                $.get('http://www.liulongbin.top:3006/api/cmtlist', function(res) {
+                    if (res.status != 200) {
+                        return alert('获取失败')
+                    }
+                    var arr = [];
+                    $.each(res.data, function(i, ele) {
+                        // console.log(ele);
+                        arr.push('<li class="list-group-item">' + ele.content + '   <span class="badge" style="background-color: orange">' + '评论时间' + ele.time + '</span> <span class="badge" style="background-color: blue">' + '评论人' + ele.username + '</span> </li>')
+
+                    });
+                    $('.list-group').empty().append(arr.join(''))
+                })
+            };
+            getComment();
+            $('#addComment').on('click', function(e) {
+                    e.preventDefault();
+                    var name = $('#name').val().trim();
+                    var content = $('#content').val().trim();
+                    $.post('http://www.liulongbin.top:3006/api/addcmt', {
+
+                            username: name,
+                            content: content
+                        },
+                        function(res) {
+                            getComment();
+                            $('.ac')[0].reset();
+                        })
+                })
+                // $('#addComment').on('click', function(e) {
+                //     e.preventDefault();
+                //     var value = $(".ac").serialize();
+                //     $.post('http://www.liulongbin.top:3006/api/addcmt', value,
+                //         function(res) {
+                //             getComment();
+                //         })
+                // })
+        });
+    </script>
+</body>
+
+</html>

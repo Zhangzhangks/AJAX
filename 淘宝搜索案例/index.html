@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <!-- 导入页面的基本样式 -->
+    <link rel="stylesheet" href="./css/search.css" />
+    <!-- 导入 jQuery -->
+    <script src="./lib/jquery.js"></script>
+    <script src="./lib/template-web.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Logo -->
+        <img src="./images/taobao_logo.png" alt="" class="logo" />
+
+        <div class="box">
+            <!-- tab 栏 -->
+            <div class="tabs">
+                <div class="tab-active">宝贝</div>
+                <div>店铺</div>
+            </div>
+            <!-- 搜索区域（搜索框和搜索按钮） -->
+            <div class="search-box">
+
+                <input id="ipt" type=" text " class="ipt" placeholder="请输入要搜索的内容 " />
+                <button class="btnSearch ">
+            搜索
+          </button>
+            </div>
+            <div id="suggets-list"> </div>
+        </div>
+    </div>
+    <!-- //带渲染数据 -->
+    <script type="text/html" id="id-suggetlist">
+        {{each result}}
+        <div class="suggest-item">
+            {{$value[0]}}
+        </div>
+        {{/each}}
+    </script>
+
+
+
+
+    <script>
+        $(function() {
+            var timer = null //定义防抖定时器
+            var obj = {} //缓存对象
+                // 防抖函数
+            function debouncee(keywords) {
+                timer = setTimeout(() => {
+                    getSuggestList(keywords)
+                }, 500);
+            }
+            // 为搜索框绑定事件 按下就取请求
+            $("#ipt ").on('click', function() {
+                var keywords = $(this).val().trim();
+                if (keywords.length <= 0) {
+                    return $("#suggets-list").empty().hide();
+                }
+                // console.log(keywords);
+                // 输入框的防抖： y意思是在duo 'ge'
+                // 一定个时间内频繁触发多个时间， 只会确保有一个事件触发
+                // 比如王者的回城按多次也只会触发一次
+                //淘宝的防抖是当用户输入全部单词后再去发送请求 比如 apple
+                //   用户按个a就会发送请求 用了防抖就会等用户输入完成
+                clearTimeout(timer) //清空定时器 防抖
+                if (obj[keywords]) {
+                    return rendersuggetlist(obj[keywords])
+                }
+                debouncee(keywords);
+            });
+            //发送请求
+            function getSuggestList(kw) {
+                $.ajax({
+                    url: 'http://suggest.taobao.com/sug?q=' + kw,
+                    dataType: 'jsonp',
+                    success: function(res) {
+                        // console.log(res);
+                        rendersuggetlist(res)
+                    }
+                });
+                // console.log(11)
+            }
+            // 渲染列表
+            function rendersuggetlist(res) {
+                if (res.result.length <= 0) {
+                    return $("$suggets-list").empty().hide()
+                } else {
+                    var strHtml = template('id-suggetlist', res);
+                    $('#suggets-list').html(strHtml).show()
+                    var k = $('#ipt').val().trim();
+                    obj[k] = res;
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

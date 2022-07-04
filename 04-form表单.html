@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./jquery.min.js"></script>
+</head>
+
+<body>
+    <!-- 当点击提交属性时 会跳转到 action的URL地址 -->
+
+    <!-- form 标签的一些属性 action: URL地址
+                        target: -self //在本窗口打开
+                                -blank//在新窗口
+                         method 有get post   默认get  提交到URL地址 设置成post有加密效果
+
+                              -->
+    <form action="/login" class="ac">
+        <input type="text " name="usename">
+        <input type="password " name="password">
+        <button type="submit">提交</button>
+    </form>
+
+    <script>
+        $(function() {
+            // $(".ac").submit(function(){
+            //     alert("监听到了表单的提示行为");
+            // e.preventDefault();
+            // });
+            $(".ac").on("submit", function(e) {
+                alert("监听到了表单的提示行为");
+                e.preventDefault(); //阻止表单的默认跳转行为    
+                //获取表单所有input数据  使用函数前input标签必须有name属性
+                var value = $(".ac").serialize();
+                console.log(value);;
+                console.log(value.substr(0, 6));
+                var data = value.split('=')
+                console.log(data);
+            });
+
+        })
+    </script>
+</body>
+
+</html>

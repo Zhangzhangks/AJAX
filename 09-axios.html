@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./axios.js"></script>
+</head>
+
+<body>
+    <button class="btn">get请求</button>
+    <button class="btn1">post请求</button>
+    <button class="btn3">axios请求</button>
+    <script>
+        // axios中的get请求所携带的数据 是通过 params控制
+        // document.querySelector('.btn').addEventListener('click',function(){
+        //     var url='http://www.liulongbin.top:3006/api/get';
+        //     var data1={name:"zks",age:"18"};
+        //     axios.get(url,{params:data1}).then(function(e){
+        //         console.log(e.data);
+        //     });
+        // }); 
+
+
+        // document.querySelector('.btn1').addEventListener('click',function(){
+        //     var url='http://www.liulongbin.top:3006/api/post';
+        //     var data3={location:'北京',address:'江苏'};
+        //     axios.post(url,data3).then(function(e){
+        //         console.log(e.data);
+        //     });
+        // });
+        //
+
+
+        //使用axios直接发起请求
+        // axios({
+        //     method:'请求类型'
+        //     url:,
+        //     data {"post数据}"
+        //     param:{get数据}
+        // }).then(fn())
+        document.querySelector(".btn3").addEventListener('click', function() {
+            // var url='http://www.liulongbin.top:3006/api/get';
+            // var data3={name:"钢铁侠",age:"18"};
+            // axios({
+            //     method:'get',
+            //     url:url,
+            //     params:data3,
+            //  }).then(function(e){
+            //     console.log(e.data);
+            //  });
+            var url = 'http://www.liulongbin.top:3006/api/post';
+            var data4 = {
+                zks: '18',
+                name: "z张可顺"
+            };
+            axios({
+                method: 'post',
+                url: url,
+                data: data4,
+            }).then(function(e) {
+                console.log(e.data);
+            });
+
+        })
+    </script>
+</body>
+
+</html>
