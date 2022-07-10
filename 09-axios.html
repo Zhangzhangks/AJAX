@@ -15,13 +15,17 @@
     <button class="btn3">axios请求</button>
     <script>
         // axios中的get请求所携带的数据 是通过 params控制
-        // document.querySelector('.btn').addEventListener('click',function(){
-        //     var url='http://www.liulongbin.top:3006/api/get';
-        //     var data1={name:"zks",age:"18"};
-        //     axios.get(url,{params:data1}).then(function(e){
-        //         console.log(e.data);
-        //     });
-        // }); 
+        document.querySelector('.btn').addEventListener('click', function() {
+            var url = 'http://www.liulongbin.top:3006/api/getbooks';
+            var data1 = {
+                id: 1
+            };
+            axios.get(url, {
+                params: data1
+            }).then(function(e) {
+                console.log(e);
+            });
+        });
 
 
         // document.querySelector('.btn1').addEventListener('click',function(){
@@ -34,37 +38,37 @@
         //
 
 
-        //使用axios直接发起请求
-        // axios({
-        //     method:'请求类型'
-        //     url:,
-        //     data {"post数据}"
-        //     param:{get数据}
-        // }).then(fn())
-        document.querySelector(".btn3").addEventListener('click', function() {
-            // var url='http://www.liulongbin.top:3006/api/get';
-            // var data3={name:"钢铁侠",age:"18"};
-            // axios({
-            //     method:'get',
-            //     url:url,
-            //     params:data3,
-            //  }).then(function(e){
-            //     console.log(e.data);
-            //  });
-            var url = 'http://www.liulongbin.top:3006/api/post';
-            var data4 = {
-                zks: '18',
-                name: "z张可顺"
-            };
-            axios({
-                method: 'post',
-                url: url,
-                data: data4,
-            }).then(function(e) {
-                console.log(e.data);
-            });
+        // //使用axios直接发起请求
+        // // axios({
+        // //     method:'请求类型'
+        // //     url:,
+        // //     data {"post数据}"
+        // //     param:{get数据}
+        // // }).then(fn())
+        // // document.querySelector(".btn3").addEventListener('click', function() {
+        // // var url='http://www.liulongbin.top:3006/api/get';
+        // // var data3={name:"钢铁侠",age:"18"};
+        // // axios({
+        // //     method:'get',
+        // //     url:url,
+        // //     params:data3,
+        // //  }).then(function(e){
+        // //     console.log(e.data);
+        // });
+        // // var url = 'http://www.liulongbin.top:3006/api/post';
+        // // var data4 = {
+        // //     zks: '18',
+        // //     name: "z张可顺"
+        // // };
+        // // axios({
+        // //     method: 'post',
+        // //     url: url,
+        // //     data: data4,
+        // // }).then(function(e) {
+        // //     console.log(e.data);
+        // });
 
-        })
+        // })
     </script>
 </body>
 

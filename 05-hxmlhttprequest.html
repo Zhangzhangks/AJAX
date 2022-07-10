@@ -10,51 +10,74 @@
 </head>
 
 <body>
-
+    <button class="btn">取消请求</button>
+    <button class="btn1">发送请求</button>
     <script>
-        // 使用xhr发起不带get请求  
+        // 使用xhr发起不带get请求
+        //1.创建请求
+        var xhr = new XMLHttpRequest();
+        var timer = null;
 
-        //     //1.创建请求
-        //     var xhr=new XMLHttpRequest();
-        //     //2.调用函数 发起不带get请求  
-        //     // xhr.open('get',"http://www.liulongbin.top:3006/api/getbooks");
-        //    //发起带参数请求
-        //     // xhr.open('get',"http://www.liulongbin.top:3006/api/getbooks?id=1");
-        //    //发起带两个参数 
-        //    xhr.open('get',"http://www.liulongbin.top:3006/api/getbooks?id=1&bookname=西游记");
-
-        //     //3.发送请求
-        //     xhr.send();
-        //     //4.调用监听函数
-        //     xhr.onreadystatechange=function(){
-        //         if(xhr.readyState==4&&xhr.status==200){
-        //             console.log(xhr.responseText);
-        //         }
-        //     }
-        // var xhr = new XMLHttpRequest();
-        // xhr.open('get', "url?name=1&bookname=西游记");
-        // xhr.send();
-        // xhr.onreadystatechange = function(res) {
-        //         if (res.readyState == 4 && res.status === 20)
-        //     }
-        //   //使用xhr发起不带post请求 
-        var sxhr = new XMLHttpRequest();
-        sxhr.open('POST', 'http://www.liulongbin.top:3006/api/addbook');
-        sxhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        sxhr.send('bookname=卡扣&author=吴承恩&publisher=北京图书出版社')
-        sxhr.onreadystatechange = function() {
-            if (sxhr.readyState == 4 && sxhr.status == 200) {
-                console.log(sxhr.responseText);
-            }
+        function getData() {
+            timer = setTimeout(function() {
+                //2.调用函数 发起不带get请求  
+                // xhr.open('get',"http://www.liulongbin.top:3006/api/getbooks");
+                //发起带参数请求
+                // xhr.open('get',"http://www.liulongbin.top:3006/api/getbooks?id=1");
+                //发起带两个参数 
+                xhr.open('get', "http://www.liulongbin.top:3006/api/getbooks?id=1&bookname=西游记");
+                //3.发送请求
+                xhr.send();
+                //4.调用监听函数
+                xhr.onreadystatechange = function() {
+                        if (xhr.readyState == 4 && xhr.status == 200) {
+                            console.log(xhr.responseText);
+                        }
+                    }
+                    // alert('事件没到')
+                console.log('111');
+                timer = null
+            }, 300)
         }
 
-        //url的编码(每三组%代表一个中文)和解码
-        var str = encodeURI('张可顺');
-        console.log(str);
-        console.log('----');
+        $('.btn1').on('click', function() {
+                console.log('22');
+                if (timer) return
+                else {
+                    getData();
 
-        var str1 = decodeURI('%E5%BC%A0%E5%8F%AF%E9%A1%BA');
-        console.log(str1);
+                }
+
+            })
+            // 取消请求
+        $('.btn').on('click', function() {
+                xhr.abort();
+                console.log(11);
+            })
+            // var xhr = new XMLHttpRequest();
+            // xhr.open('get', "url?name=1&bookname=西游记");
+            // xhr.send();
+            // xhr.onreadystatechange = function(res) {
+            //         if (res.readyState == 4 && res.status === 20)
+            //     }
+            //   //使用xhr发起不带post请求 
+            // var sxhr = new XMLHttpRequest();
+            // sxhr.open('POST', 'http://www.liulongbin.top:3006/api/addbook');
+            // sxhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            // sxhr.send('bookname=卡扣&author=吴承恩&publisher=北京图书出版社')
+            // sxhr.onreadystatechange = function() {
+            //     if (sxhr.readyState == 4 && sxhr.status == 200) {
+            //         console.log(sxhr.responseText);
+            //     }
+            // }
+
+        // //url的编码(每三组%代表一个中文)和解码
+        // var str = encodeURI('张可顺');
+        // console.log(str);
+        // console.log('----');
+
+        // var str1 = decodeURI('%E5%BC%A0%E5%8F%AF%E9%A1%BA');
+        // console.log(str1);
     </script>
 </body>
 

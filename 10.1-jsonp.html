@@ -10,10 +10,36 @@
 </head>
 
 <body>
-    <!-- jsonp的实现原理 利用 script的src属性 -->
-    <!-- <script src="http://ajax.frontend.itheima.net:3006/api/jsonp?callback=abc&name=ls&age=30"> -->
-    <!-- </script> -->
+    <button>发其请求</button>
     <script>
+        function fn(data) {
+            console.log('我被调用了');
+            console.log(data);
+        }
+    </script>
+    <script>
+        function success(data) {
+            console.log('我被调用了');
+            console.log(data);
+        }
+    </script>
+
+    <!-- jsonp的实现原理 利用 script的src属性 -->
+    <script>
+        $('button').on('click', function() {
+            var script = document.createElement('script');
+            script.src = './10.jsonp.js?callback=fn'
+            document.body.appendChild(script);
+            script.onload = function() {
+                document.body.removeChild(script)
+            }
+            console.log(11);
+        })
+    </script>
+    <!-- <script src="./10.jsonp.js?callback=fn"></script> -->
+    <!-- <script src="http://ajax.frontend.itheima.net:3006/api/jsonp?callback=success&name=zks&age=18"></script> -->
+
+    <!-- <script>
         $.ajax({
             url: " http://ajax.frontend.itheima.net:3006/api/jsonp?name=zs&age=20",
             dataType: 'jsonp ',
@@ -26,7 +52,7 @@
                 console.log(e);
             }
         })
-    </script>
+    </script> -->
 </body>
 
 </html>

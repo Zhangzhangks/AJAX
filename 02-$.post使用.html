@@ -1,36 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-<script src="../jQuery的使用/jquery.min.js"></script>
+    <script src="./jquery.min.js"></script>
 </head>
+
 <body>
     <!-- 被【】框起来的代表可选参数 -->
-<!-- $.get(url地址，[data，回调函数])函数 -->
-<button class="btn">向服务器传输数据</button>
+    <!-- $.get(url地址，[data，回调函数])函数 -->
+    <button class=" btn ">向服务器传输数据</button>
 
-<script>
-$(function(){
-    $(".btn").on("click",function(){
-        $.post('http://www.liulongbin.top:3006/api/addbook',
-        {
-            bookname:'鲁兵逊漂流记',author:'张可顺',publisher:'上海出版社'
-        },
-        function(e){
-            console.log(e);
-        });
-    });
+    <script>
+        $(function() {
+            $(".btn ").on("click ", function() {
+                $.post('http://www.liulongbin.top:3006/api/addbook', {
+                        bookname: '鲁兵逊漂流记',
+                        author: '张可顺',
+                        publisher: '上海出版社'
+                    },
+                    function(e) {
+                        console.log(e);
+                    });
+            });
 
-    //发起ID为的图书
-    // $(".btn1").on("click",function(){
-    //     $.get('http://www.liulongbin.top:3006/api/getbooks'),{id:1},function(e){
-    //         console.log(e);
-    //     }
-    // });
-})
-</script>
+            //发起ID为的图书
+            // $(".btn1 ").on("click ",function(){
+            //     $.get('http://www.liulongbin.top:3006/api/getbooks'),{id:1},function(e){
+            //         console.log(e);
+            //     }
+            // });
+        })
+    </script>
 </body>
+
 </html>

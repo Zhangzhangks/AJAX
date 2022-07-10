@@ -18,6 +18,7 @@ function itheima(option) {
         xhr.open(option.method, option.URL + '?' + qs);
         xhr.send();
     } else if (option.method.toUpperCase() === 'POST') {
+
         xhr.open(option.method, option.URL);
         xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 
@@ -25,9 +26,9 @@ function itheima(option) {
 
     }
     xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4 && xhr.status == 20) {
+        if (xhr.readyState === 4 && xhr.status == 200) {
             var result = JSON.parse(xhr.responseText);
-            console.log(result);
+            // console.log(result);
             option.success(result)
         }
     };

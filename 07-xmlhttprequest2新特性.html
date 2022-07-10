@@ -39,6 +39,10 @@
         // xhr.ontimeout=function(){
         //     alert("请求超时");
         // }
+        //网络中断函数
+        // xhr.error = function() {
+        //         alert('网络断开')
+        //     }
         // xhr.open('get',"http://www.liulongbin.top:3006/api/getbooks");
         // xhr.send();
         // xhr.onreadystatechange=function(){
@@ -47,81 +51,87 @@
         //     } 
         // }
         //2.formData
-        // var fd = new FormData();
-        // fd.append('name', 'zks');
-        // fd.append('password', '111');
-        // var sxhr = new XMLHttpRequest();
-        // sxhr.open("post", "http://www.liulongbin.top:3006/api/formdata");
-        // sxhr.send(fd);
-        // sxhr.onreadystatechange = function() {
-        //     if (sxhr.readyState == 4 && sxhr.status == 200) {
-        //         console.log(sxhr.responseText);
-        //     }
-        // }
+        var fd = new FormData();
+        fd.append('name', 'zks');
+        fd.append('password', '111');
+        var sxhr = new XMLHttpRequest();
+        sxhr.open("post", "http://www.liulongbin.top:3006/api/formdata");
+        sxhr.send(fd);
+        sxhr.onreadystatechange = function() {
+            if (sxhr.readyState == 4 && sxhr.status == 200) {
+                console.log(sxhr.responseText);
+            }
+        }
 
         // 3. 从网页拿取数据
-        // var form = document.querySelector('.ac');
-        // form.addEventListener('submit', function(e) {
-        //     e.preventDefault();
+        var form = document.querySelector('.ac');
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
 
-        //     var fdd = new FormData(form);
-        //     var sxhr = new XMLHttpRequest();
-        //     sxhr.open("post", "http://www.liulongbin.top:3006/api/formdata");
-        //     sxhr.send(fdd);
-        //     sxhr.onreadystatechange = function() {
-        //         if (sxhr.readyState == 4 && sxhr.status == 200) {
-        //             console.log(sxhr.responseText);
-        //         }
-        //     }
-        // });
-
-        //4. 上传文件
-        var btn = document.querySelector(".btn");
-        btn.addEventListener('click', function() {
-            var file = document.querySelector('#file1').files;
-            if (file.length <= 0) {
-                console.log('请选择上传的文件');
-            } else {
-                console.log('用户选择了待上传的文件');
-            }
-            var fdd = new FormData();
-
-            //向formdata中追加文件
-            fdd.append('avatar', file[0]);
-            var xhr = new XMLHttpRequest();
-
-            xhr.open('post', 'http://www.liulongbin.top:3006/api/upload/avatar');
-            xhr.setRequestHeader('Content-type', 'application/-www-foorm-urlencoded');
-            xhr.send(fdd);
-            xhr.onreadystatechange = function() {
-                    if (xhr.readyState == 4 && xhr.status == 200) {
-                        var result = JSON.parse(xhr.responseText);
-                        // console.log(result);
-                        if (result.status == 200) {
-                            console.log('上传成功');
-                            document.querySelector('#img').src = ('http://www.liulongbin.top:3006' + result.url);
-                        } else {
-                            console.log('上传失败');
-                        }
-                    }
+            var fdd = new FormData(form);
+            var sxhr = new XMLHttpRequest();
+            sxhr.open("post", "http://www.liulongbin.top:3006/api/formdata");
+            sxhr.send(fdd);
+            sxhr.onreadystatechange = function() {
+                if (sxhr.readyState == 4 && sxhr.status == 200) {
+                    var responseText = JSON.parse(sxhr.responseText)
+                    console.log(responseText);
+                    // console.log(fdd.get('usename'));输出属性值
+                    // console.log(fdd.set('usename','zks'));设置属性值 有覆盖没有设置
+                    // console.log(fdd.delete('usename'));删除属性值 
+                    //fdd.append('usename', '111');//append 和set 当属性名相同 append 会再去创建新值不会覆盖
                 }
-                //     //显示进度
-                // xhr.upload.onprogress = function(e) {
-                //     //e.lengthComputable 计算是否可以算出上传的长度
-                //     if (e.lengthComputable) {
-
-            //         //e.loaded 已传输的字节
-            //         //e.total 需要传输的字节        
-            //         var percent = Math.ceil(e.loaded / e.total) * 100;
-            //         $('#jindu').attr('style', 'width:' + percent + '%;').html(percent + '%');
-
-            //     }
-            // }
-            // xhr.upload.onload = function() {
-            //     $('#jindu').removeClass().addClass('progress-bar progress-bar-success')
-            // }
+            }
 
         });
+
+        //4. 上传文件
+        // var btn = document.querySelector(".btn");
+        // btn.addEventListener('click', function() {
+        //     var file = document.querySelector('#file1').files;
+        //     if (file.length <= 0) {
+        //         console.log('请选择上传的文件');
+        //     } else {
+        //         console.log('用户选择了待上传的文件');
+        //     }
+        //     var fdd = new FormData();
+
+        //     //向formdata中追加文件
+        //     fdd.append('avatar', file[0]);
+        //     var xhr = new XMLHttpRequest();
+
+        //     xhr.open('post', 'http://www.liulongbin.top:3006/api/upload/avatar');
+        //     xhr.setRequestHeader('Content-type', 'application/-www-foorm-urlencoded');
+        //     xhr.send(fdd);
+        //     xhr.onreadystatechange = function() {
+        //             if (xhr.readyState == 4 && xhr.status == 200) {
+        //                 var result = JSON.parse(xhr.responseText);
+        //                 // console.log(result);
+        //                 if (result.status == 200) {
+        //                     console.log('上传成功');
+        //                     document.querySelector('#img').src = ('http://www.liulongbin.top:3006' + result.url);
+        //                 } else {
+        //                     console.log('上传失败');
+        //                 }
+        //             }
+        //         }
+        //     //显示进度
+        // xhr.upload.onprogress = function(e) {
+        //     //e.lengthComputable 计算是否可以算出上传的长度
+        //     if (e.lengthComputable) {
+
+        //         //e.loaded 已传输的字节
+        //         //e.total 需要传输的字节        
+        //         var percent = Math.ceil(e.loaded / e.total) * 100;
+        //         $('#jindu').attr('style', 'width:' + percent + '%;').html(percent + '%');
+
+        //     }
+        // }
+        // xhr.upload.onload = function() {
+        //     $('#jindu').removeClass().addClass('progress-bar progress-bar-success')
+        // }
+
+        // });
     </script>
 </body>
 

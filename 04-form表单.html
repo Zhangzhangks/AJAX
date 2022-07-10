@@ -35,10 +35,11 @@
                 e.preventDefault(); //阻止表单的默认跳转行为    
                 //获取表单所有input数据  使用函数前input标签必须有name属性
                 var value = $(".ac").serialize();
+                var valueArr = $(this).serializeArray(); //数组
+                // [{name:'usename'，Value:'用户表单输入的值'},{name:"password",value:'用户表单输入值'}]
+                console.log(valueArr);
                 console.log(value);;
-                console.log(value.substr(0, 6));
-                var data = value.split('=')
-                console.log(data);
+
             });
 
         })
