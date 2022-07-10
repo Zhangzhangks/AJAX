@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../jquery.min.js"></script>
+    <link rel="stylesheet" href="./nprogress.css">
+    <script src="./nprogress.js"></script>
+</head>
+
+<body>
+    <script>
+        //ajax请求之前
+        $(document).on('ajaxStart', function() {
+            // console.log(11);
+            // NProgress.start()
+            // NProgress.set(0.4)
+            NProgress.inc()
+        })
+        setTimeout(function() {
+            $.ajax({
+                type: 'get',
+                url: 'http://www.liulongbin.top:3006/api/getbooks',
+                data: {},
+                success: function(res) {
+                    console.log(res);
+                }
+            });
+        }, 300)
+
+
+        //ajax请求完成之后
+        $(document).on('ajaxComplete', function() {
+            NProgress.done()
+        })
+    </script>
+</body>
+
+</html>

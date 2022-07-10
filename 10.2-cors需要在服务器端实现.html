@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./jquery.min.js"></script>
+</head>
+
+<body>
+    <script>
+        $.ajax({
+                type: 'get',
+                url: 'https://wis.qq.com/weather/common',
+                data: {
+                    // ?source=pc&weather_type=forecast_1h&province=江苏&city=徐州
+                    source: 'pc',
+                    weather_type: 'forecast_1h',
+                    province: '江苏',
+                    city: '徐州'
+                },
+                beforeSend: function(xhr) {
+                    console.log(11);
+                    xhr.setRequestHeader('Access-Control-Allow-Origin', '*')
+                },
+                // 实现跨域时是否携带cookie
+                xhrFields: {
+                    withCredentials: true
+                },
+                success: function(res) {
+                    console.log(res);
+                }
+            })
+            // var xhr = new XMLHttpRequest();
+            // xhr.open('get', 'https://wis.qq.com/weather/common?source=pc&weather_type=forecast_1h&province=江苏&city=徐州');
+            // xhr.setRequestHeader('Access-Control-Allow-Origin', '*')
+            //     //3.发送请求
+            // xhr.send();
+            // //4.调用监听函数
+            // xhr.onreadystatechange = function() {
+            //     if (xhr.readyState == 4 && xhr.status == 200) {
+            //         console.log(xhr.responseText);
+            //     }
+            // }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../jquery.min.js"></script>
+    <script src="../art-template模板引擎/template-web.js"></script>
+    <link rel="stylesheet" href="../04-图书管理案列i.html/bootstrap.css">
+</head>
+
+<body style="padding: 100px;">
+    <table class="table table-striped table-hover" id="tab">
+
+    </table>
+    <script type="text/html" id="tpl">
+        <thead>
+            <tr>
+                <th>时间</th>
+                <th>温度</th>
+                <th>天气</th>
+                <th>凤向</th>
+                <th>风力</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{each info}}
+            <tr>
+                <td>{{$value.update_time | dataFormatTime}}</td>
+                <td>{{$value.degree}}</td>
+                <td>{{$value.weather}}</td>
+                <td>{{$value.wind_direction}}</td>
+                <td>{{$value.wind_power}}</td>
+            </tr>
+            {{/each}}
+        </tbody>
+
+    </script>
+    <script>
+        template.defaults.imports.dataFormatTime = function(value) {
+            console.log("过滤器的值" +
+                value);
+            var year = value.substr(0, 4);
+            var month = value.substr(4, 2);
+            var day = value.substr(6, 2);
+            var hour = value.substr(8, 2);
+            var min = value.substr(10, 2);
+            var second = value.substr(12, 2)
+            return `${year}年${month}月${day}日${hour}时${min}分${second}秒`
+        }
+        $(function() {
+
+            $.ajax({
+                url: 'https://wis.qq.com/weather/common?source=pc&weather_type=forecast_1h&province=江苏&city=徐州',
+                dataType: 'jsonp',
+                success: function(res) {
+                    // console.log(res.data.forecast_1h);
+                    var htmlstr = template('tpl', {
+                        info: res.data.forecast_1h
+                    });
+                    $('#tab').html(htmlstr)
+                }
+            });
+
+        })
+    </script>
+</body>
+
+</html>
